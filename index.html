@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roohi - Poetry World</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --black: #000000;
+            --black-light: #0a0a0a;
+            --black-soft: #111111;
+            --gray-dark: #1a1a1a;
+            --gray: #2a2a2a;
+            --gray-light: #888888;
+            --white: #ffffff;
+            --gold: #d4af37;
+            --gold-light: #e8c547;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--black); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+        /* Background Glow */
+        .bg-glow {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(212,175,55,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Voice Box */
+        .voice-indicator {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--gray-dark);
+            border: 1px solid var(--gold);
+            padding: 10px 18px;
+            border-radius: 25px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+        }
+
+        .voice-indicator.show { display: flex; }
+
+        .voice-bars {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .voice-bar {
+            width: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: voiceWave 0.5s ease infinite alternate;
+        }
+
+        .voice-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+        .voice-bar:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+        .voice-bar:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+        .voice-bar:nth-child(4) { height: 16px; animation-delay: 0.3s; }
+
+        @keyframes voiceWave {
+            to { height: 18px; }
+        }
+
+        .voice-text {
+            font-size: 0.8rem;
+            color: var(--gold);
+        }
+
+        /* ==================== LOGIN ==================== */
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: var(--black-light);
+            border: 1px solid var(--gray);
+            border-radius: 16px;
+            padding: 45px 35px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            letter-spacing: 6px;
+        }
+
+        .brand-tag {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            color: var(--gray-light);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--black);
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-input::placeholder {
+            color: #555;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .eye-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-light);
+            cursor: pointer;
+        }
+
+        .eye-toggle:hover { color: var(--gold); }
+
+        .error-box {
+            background: rgba(255,80,80,0.1);
+            border: 1px solid rgba(255,80,80,0.3);
+            color: #ff6b6b;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: var(--gold);
+            border: none;
+            border-radius: 8px;
+            color: var(--black);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background: var(--gold-light);
+            box-shadow: 0 8px 25px rgba(212,175,55,0.25);
+        }
+
+        /* ==================== DASHBOARD ==================== */
+        .dashboard-page {
+            display: none;
+        }
+
+        /* Header */
+        .header {
+            background: var(--black-light);
+            border-bottom: 1px solid var(--gray-dark);
+            padding: 14px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-emoji { font-size: 1.4rem; }
+
+        .header-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gray-dark);
+            padding: 8px 14px;
+            border-radius: 20px;
+        }
+
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--gold);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .user-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid var(--gray);
+            color: var(--gray-light);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-logout:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        /* Main */
+        .main {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 35px 20px;
+        }
+
+        /* Welcome */
+        .welcome {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .welcome-title span { color: var(--gold); }
+
+        .welcome-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--gray-light);
+            font-style: italic;
+        }
+
+        /* Generator */
+        .generator {
+            background: var(--black-light);
+            border: 1px solid var(--gray-dark);
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 35px;
+        }
+
+        .gen-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .field-group {
+            margin-bottom: 22px;
+        }
+
+        .field-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--gray-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .field-label i { color: var(--gold); }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--black);
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.3s;
+        }
+
+        .dropdown-toggle:hover { border-color: var(--gold); }
+
+        .dropdown-toggle.open {
+            border-color: var(--gold);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .dropdown-toggle i { transition: transform 0.3s; }
+        .dropdown-toggle.open i { transform: rotate(180deg); }
+
+        .dropdown-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--black);
+            border: 1px solid var(--gold);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+            z-index: 50;
+        }
+
+        .dropdown-list.open {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .dropdown-option {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--gray-dark);
+            transition: background 0.2s;
+        }
+
+        .dropdown-option:last-child { border-bottom: none; }
+        .dropdown-option:hover { background: var(--gray-dark); }
+
+        .dropdown-option.active { background: rgba(212,175,55,0.1); }
+
+        .option-emoji { font-size: 1.3rem; }
+
+        .option-info { flex: 1; }
+
+        .option-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .option-desc {
+            font-size: 0.75rem;
+            color: var(--gray-light);
+        }
+
+        .option-check {
+            color: var(--gold);
+            display: none;
+        }
+
+        .dropdown-option.active .option-check { display: block; }
+
+        /* Select */
+        .field-select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--black);
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d4af37' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+        }
+
+        .field-select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .field-select option {
+            background: var(--black);
+        }
+
+        /* Lines */
+        .lines-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .lines-num {
+            background: var(--gold);
+            color: var(--black);
+            padding: 5px 14px;
+            border-radius: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .lines-range {
+            width: 100%;
+            height: 5px;
+            -webkit-appearance: none;
+            background: var(--gray-dark);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .lines-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .lines-marks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            padding: 0 8px;
+        }
+
+        .lines-mark {
+            font-size: 0.7rem;
+            color: var(--gray-light);
+        }
+
+        /* Generate Button */
+        .btn-generate {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border: none;
+            border-radius: 10px;
+            color: var(--black);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+        }
+
+        .btn-generate:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--black);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Poetry Section */
+        .poetry-section {
+            margin-top: 40px;
+        }
+
+        .poetry-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .poetry-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .poetry-num {
+            font-size: 0.8rem;
+            color: var(--gray-light);
+        }
+
+        /* Loading */
+        .loading-box {
+            text-align: center;
+            padding: 50px;
+            display: none;
+        }
+
+        .loading-icon {
+            font-size: 2.5rem;
+            color: var(--gold);
+            animation: pulse 1s infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        .loading-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--gray-light);
+            font-style: italic;
+        }
+
+        /* Empty */
+        .empty-box {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--black-light);
+            border: 1px dashed var(--gray);
+            border-radius: 12px;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .empty-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gray-light);
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Poetry Cards */
+        .poetry-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .poetry-card {
+            background: var(--black-light);
+            border: 1px solid var(--gray-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .poetry-card:hover {
+            border-color: var(--gold);
+        }
+
+        .card-top {
+            background: var(--black);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-dark);
+        }
+
+        .card-cat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-emoji { font-size: 1.2rem; }
+
+        .card-cat-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .card-btn {
+            width: 32px;
+            height: 32px;
+            background: var(--gray-dark);
+            border: none;
+            border-radius: 6px;
+            color: var(--gray-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .card-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .card-btn.copied {
+            background: #4caf50 !important;
+            color: white !important;
+        }
+
+        .card-content {
+            padding: 25px 20px;
+        }
+
+        .card-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            line-height: 2.1;
+            color: #f0f0f0;
+        }
+
+        .card-text p {
+            margin-bottom: 6px;
+            padding-left: 12px;
+            border-left: 2px solid var(--gold);
+        }
+
+        .card-bottom {
+            background: var(--black);
+            padding: 10px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--gray-dark);
+        }
+
+        .card-time {
+            font-size: 0.75rem;
+            color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-lines-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--gray-dark);
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: var(--gray-light);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--black-soft);
+            border: 1px solid var(--gold);
+            padding: 12px 25px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        .toast.success { border-color: #4caf50; }
+        .toast.success i { color: #4caf50; }
+
+        .toast.error { border-color: #ff6b6b; }
+        .toast.error i { color: #ff6b6b; }
+
+        .toast.warning { border-color: #ffc107; }
+        .toast.warning i { color: #ffc107; }
+
+        .toast span {
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--gray-dark);
+            margin-top: 50px;
+        }
+
+        .footer-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            color: var(--gray-light);
+        }
+
+        .footer-text span { color: var(--gold); }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header { padding: 12px 15px; }
+            .header-name { font-size: 1.1rem; letter-spacing: 2px; }
+            .user-name { display: none; }
+            .btn-logout span { display: none; }
+            .btn-logout { padding: 8px; }
+
+            .main { padding: 25px 15px; }
+            .welcome-title { font-size: 1.6rem; }
+            .generator { padding: 22px 18px; }
+            .login-box { padding: 35px 25px; }
+            .brand-name { font-size: 2rem; }
+            .card-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="bg-glow"></div>
+
+    <!-- Voice Indicator -->
+    <div class="voice-indicator" id="voiceIndicator">
+        <div class="voice-bars">
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+            <div class="voice-bar"></div>
+        </div>
+        <span class="voice-text">Speaking...</span>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg">Message</span>
+    </div>
+
+    <!-- ========== LOGIN PAGE ========== -->
+    <div class="login-page" id="loginPage">
+        <div class="login-box">
+            <div class="brand">
+                <div class="brand-emoji">🌹</div>
+                <h1 class="brand-name">ROOHI</h1>
+                <p class="brand-tag">Where Poetry Meets Soul</p>
+            </div>
+
+            <div class="error-box" id="errorBox">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Invalid username or password</span>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="usernameInput" placeholder="Enter username" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" class="form-input" id="passwordInput" placeholder="Enter password">
+                        <i class="fas fa-eye eye-toggle" id="eyeToggle"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Enter <i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== DASHBOARD ========== -->
+    <div class="dashboard-page" id="dashboardPage">
+        <header class="header">
+            <div class="header-brand">
+                <span class="header-emoji">🌹</span>
+                <h1 class="header-name">ROOHI</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-badge">
+                    <div class="user-avatar" id="userAvatar">R</div>
+                    <span class="user-name" id="displayName">Roohi</span>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="welcome">
+                <h2 class="welcome-title">Create <span>Beautiful</span> Poetry</h2>
+                <p class="welcome-sub">Express your feelings through words</p>
+            </section>
+
+            <section class="generator">
+                <h3 class="gen-header">
+                    <i class="fas fa-feather-alt"></i>
+                    POETRY GENERATOR
+                </h3>
+
+                <!-- Category -->
+                <div class="field-group">
+                    <label class="field-label">
+                        <i class="fas fa-heart"></i>
+                        Select Category
+                    </label>
+                    <div class="dropdown" id="dropdown">
+                        <button type="button" class="dropdown-toggle" id="dropdownToggle">
+                            <span class="dropdown-display">
+                                <span id="selectedEmoji">💕</span>
+                                <span id="selectedText">Choose category...</span>
+                            </span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-list" id="dropdownList">
+                            <div class="dropdown-option" data-value="love" data-emoji="💕">
+                                <span class="option-emoji">💕</span>
+                                <div class="option-info">
+                                    <div class="option-name">Love</div>
+                                    <div class="option-desc">Romantic & passionate</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                            <div class="dropdown-option" data-value="sad" data-emoji="💔">
+                                <span class="option-emoji">💔</span>
+                                <div class="option-info">
+                                    <div class="option-name">Sad</div>
+                                    <div class="option-desc">Heartbreak & sorrow</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                            <div class="dropdown-option" data-value="friendship" data-emoji="🤝">
+                                <span class="option-emoji">🤝</span>
+                                <div class="option-info">
+                                    <div class="option-name">Friendship</div>
+                                    <div class="option-desc">Bond & loyalty</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                            <div class="dropdown-option" data-value="life" data-emoji="🌟">
+                                <span class="option-emoji">🌟</span>
+                                <div class="option-info">
+                                    <div class="option-name">Life</div>
+                                    <div class="option-desc">Wisdom & philosophy</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                            <div class="dropdown-option" data-value="nature" data-emoji="🌸">
+                                <span class="option-emoji">🌸</span>
+                                <div class="option-info">
+                                    <div class="option-name">Nature</div>
+                                    <div class="option-desc">Beauty of nature</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                            <div class="dropdown-option" data-value="motivation" data-emoji="🔥">
+                                <span class="option-emoji">🔥</span>
+                                <div class="option-info">
+                                    <div class="option-name">Motivation</div>
+                                    <div class="option-desc">Inspiring words</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                            <div class="dropdown-option" data-value="missing" data-emoji="🥺">
+                                <span class="option-emoji">🥺</span>
+                                <div class="option-info">
+                                    <div class="option-name">Missing</div>
+                                    <div class="option-desc">Longing & memories</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                            <div class="dropdown-option" data-value="attitude" data-emoji="😎">
+                                <span class="option-emoji">😎</span>
+                                <div class="option-info">
+                                    <div class="option-name">Attitude</div>
+                                    <div class="option-desc">Bold & confident</div>
+                                </div>
+                                <i class="fas fa-check option-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language -->
+                <div class="field-group">
+                    <label class="field-label">
+                        <i class="fas fa-language"></i>
+                        Language
+                    </label>
+                    <select class="field-select" id="langSelect">
+                        <option value="urdu">Urdu (اردو)</option>
+                        <option value="hindi">Hindi (हिंदी)</option>
+                        <option value="roman">Roman Urdu</option>
+                        <option value="english">English</option>
+                    </select>
+                </div>
+
+                <!-- Lines -->
+                <div class="field-group">
+                    <div class="lines-header">
+                        <label class="field-label">
+                            <i class="fas fa-align-left"></i>
+                            Lines
+                        </label>
+                        <span class="lines-num" id="linesNum">4</span>
+                    </div>
+                    <input type="range" class="lines-range" id="linesRange" min="2" max="8" value="4">
+                    <div class="lines-marks">
+                        <span class="lines-mark">2</span>
+                        <span class="lines-mark">4</span>
+                        <span class="lines-mark">6</span>
+                        <span class="lines-mark">8</span>
+                    </div>
+                </div>
+
+                <!-- Generate -->
+                <button class="btn-generate" id="generateBtn">
+                    <span class="btn-spinner" id="btnSpinner"></span>
+                    <i class="fas fa-magic" id="btnIcon"></i>
+                    <span id="btnText">Generate Poetry</span>
+                </button>
+            </section>
+
+            <!-- Poetry -->
+            <section class="poetry-section">
+                <div class="poetry-head">
+                    <h3 class="poetry-title">
+                        <i class="fas fa-scroll"></i>
+                        Your Poetry
+                    </h3>
+                    <span class="poetry-num" id="poemCount">0 poems</span>
+                </div>
+
+                <div class="loading-box" id="loadingBox">
+                    <div class="loading-icon"><i class="fas fa-feather-alt"></i></div>
+                    <p class="loading-text">Creating poetry for you...</p>
+                </div>
+
+                <div class="empty-box" id="emptyBox">
+                    <div class="empty-icon"><i class="fas fa-pen-fancy"></i></div>
+                    <h4 class="empty-title">No Poetry Yet</h4>
+                    <p class="empty-desc">Select a category and generate poetry!</p>
+                </div>
+
+                <div class="poetry-cards" id="poetryCards"></div>
+            </section>
+
+            <footer class="footer">
+                <p class="footer-text">Made with <span>♥</span> by Roohi</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // ========== CONFIG ==========
+        const CONFIG = {
+            username: 'roohi',
+            password: 'roohilovei',
+            apiUrl: 'https://anabot.my.id/api/ai/chatgpt',
+            apiKey: 'freeApikey',
+            voiceMsg: 'Aap ka swagat hai Roohi ki duniya mein'
+        };
+
+        // ========== PROMPTS FOR EACH CATEGORY ==========
+        const PROMPTS = {
+            love: [
+                "Write a beautiful romantic love shayari about deep passionate feelings, heart beating fast, eyes meeting, and eternal love.",
+                "Create an emotional love poetry about missing your beloved, their memories, and the pain of separation.",
+                "Write a romantic shayari about first love, butterflies in stomach, and beautiful moments together.",
+                "Create a love poem about unconditional love, being lost in someone, and hearts connecting.",
+                "Write a passionate shayari about love confession, expressing hidden feelings, and love at first sight."
+            ],
+            sad: [
+                "Write a heart-touching sad shayari about heartbreak, tears falling, and pain of betrayal.",
+                "Create an emotional poetry about broken heart, shattered dreams, and deep sorrow.",
+                "Write a sad shayari about lost love, memories that hurt, and sleepless nights.",
+                "Create a melancholic poem about loneliness, empty feelings, and silent tears.",
+                "Write a painful shayari about goodbye, letting go, and wounds that never heal."
+            ],
+            friendship: [
+                "Write a beautiful shayari about true friendship, loyalty, and friends who become family.",
+                "Create a poetry about best friends, shared memories, and unbreakable bond.",
+                "Write a touching shayari about friends who stay forever, trust, and pure friendship.",
+                "Create a poem about childhood friends, growing up together, and timeless friendship.",
+                "Write a heartfelt shayari about friends who understand without words."
+            ],
+            life: [
+                "Write a deep philosophical shayari about life's journey, struggles, and finding meaning.",
+                "Create a wisdom poetry about life lessons, time passing, and learning from experiences.",
+                "Write an inspiring shayari about life's ups and downs, hope, and moving forward.",
+                "Create a thoughtful poem about destiny, fate, and life's beautiful mysteries.",
+                "Write a profound shayari about living in the moment, cherishing life, and being grateful."
+            ],
+            nature: [
+                "Write a beautiful shayari about moonlit nights, stars twinkling, and romantic weather.",
+                "Create a poetry about spring flowers, gentle breeze, and nature's beauty.",
+                "Write a scenic shayari about rain, petrichor, and dancing droplets.",
+                "Create a poem about sunset colors, evening skies, and peaceful nature.",
+                "Write a romantic shayari about gardens, roses blooming, and morning dew."
+            ],
+            motivation: [
+                "Write a powerful motivational shayari about never giving up, rising after falling, and inner strength.",
+                "Create an inspiring poetry about achieving dreams, hard work, and determination.",
+                "Write an encouraging shayari about believing in yourself, courage, and success.",
+                "Create a motivating poem about overcoming obstacles, fighting back, and winning.",
+                "Write a powerful shayari about self-confidence, being fearless, and conquering challenges."
+            ],
+            missing: [
+                "Write an emotional shayari about missing someone deeply, their absence, and empty spaces.",
+                "Create a longing poetry about waiting for someone, counting days, and painful separation.",
+                "Write a touching shayari about memories of someone, their laugh, and missing their presence.",
+                "Create a nostalgic poem about past moments, wishing for reunion, and incomplete feelings.",
+                "Write a heartfelt shayari about distance, longing hearts, and hope of meeting again."
+            ],
+            attitude: [
+                "Write a bold attitude shayari about self-respect, confidence, and unique style.",
+                "Create a powerful poetry about not caring what others think, being yourself, and standing strong.",
+                "Write a fierce shayari about attitude, swag, and being unstoppable.",
+                "Create a confident poem about self-love, being the best, and owning your path.",
+                "Write a stylish shayari about walking with pride, leaving marks, and being legendary."
+            ]
+        };
+
+        // ========== STATE ==========
+        let state = {
+            category: null,
+            emoji: null,
+            isGenerating: false,
+            voicePlayed: false,
+            count: 0
+        };
+
+        // ========== ELEMENTS ==========
+        const $ = id => document.getElementById(id);
+
+        const el = {
+            loginPage: $('loginPage'),
+            dashboardPage: $('dashboardPage'),
+            loginForm: $('loginForm'),
+            usernameInput: $('usernameInput'),
+            passwordInput: $('passwordInput'),
+            eyeToggle: $('eyeToggle'),
+            errorBox: $('errorBox'),
+            displayName: $('displayName'),
+            userAvatar: $('userAvatar'),
+            logoutBtn: $('logoutBtn'),
+            dropdownToggle: $('dropdownToggle'),
+            dropdownList: $('dropdownList'),
+            selectedEmoji: $('selectedEmoji'),
+            selectedText: $('selectedText'),
+            langSelect: $('langSelect'),
+            linesRange: $('linesRange'),
+            linesNum: $('linesNum'),
+            generateBtn: $('generateBtn'),
+            btnSpinner: $('btnSpinner'),
+            btnIcon: $('btnIcon'),
+            btnText: $('btnText'),
+            loadingBox: $('loadingBox'),
+            emptyBox: $('emptyBox'),
+            poetryCards: $('poetryCards'),
+            poemCount: $('poemCount'),
+            voiceIndicator: $('voiceIndicator'),
+            toast: $('toast'),
+            toastMsg: $('toastMsg')
+        };
+
+        // ========== VOICE ==========
+        function playVoice() {
+            if (state.voicePlayed || !('speechSynthesis' in window)) return;
+            
+            const u = new SpeechSynthesisUtterance(CONFIG.voiceMsg);
+            u.lang = 'hi-IN';
+            u.rate = 0.9;
+            u.pitch = 1.1;
+            
+            el.voiceIndicator.classList.add('show');
+            u.onend = () => el.voiceIndicator.classList.remove('show');
+            
+            speechSynthesis.speak(u);
+            state.voicePlayed = true;
+        }
+
+        // ========== TOAST ==========
+        function showToast(msg, type = 'success') {
+            const icons = { success: 'fa-check-circle', error: 'fa-times-circle', warning: 'fa-exclamation-circle' };
+            el.toast.className = `toast ${type}`;
+            el.toast.querySelector('i').className = `fas ${icons[type]}`;
+            el.toastMsg.textContent = msg;
+            el.toast.classList.add('show');
+            setTimeout(() => el.toast.classList.remove('show'), 3000);
+        }
+
+        // ========== LOGIN ==========
+        el.eyeToggle.onclick = () => {
+            const t = el.passwordInput.type === 'password' ? 'text' : 'password';
+            el.passwordInput.type = t;
+            el.eyeToggle.className = t === 'password' ? 'fas fa-eye eye-toggle' : 'fas fa-eye-slash eye-toggle';
+        };
+
+        el.usernameInput.addEventListener('input', playVoice);
+
+        el.loginForm.onsubmit = (e) => {
+            e.preventDefault();
+            const u = el.usernameInput.value.trim().toLowerCase();
+            const p = el.passwordInput.value;
+
+            if (u === CONFIG.username && p === CONFIG.password) {
+                el.errorBox.style.display = 'none';
+                el.loginPage.style.display = 'none';
+                el.dashboardPage.style.display = 'block';
+                el.displayName.textContent = u.charAt(0).toUpperCase() + u.slice(1);
+                el.userAvatar.textContent = u.charAt(0).toUpperCase();
+                showToast('Welcome to Roohi! 🌹');
+            } else {
+                el.errorBox.style.display = 'flex';
+            }
+        };
+
+        el.logoutBtn.onclick = () => {
+            el.dashboardPage.style.display = 'none';
+            el.loginPage.style.display = 'flex';
+            el.usernameInput.value = '';
+            el.passwordInput.value = '';
+            state.voicePlayed = false;
+        };
+
+        // ========== DROPDOWN ==========
+        el.dropdownToggle.onclick = () => {
+            el.dropdownToggle.classList.toggle('open');
+            el.dropdownList.classList.toggle('open');
+        };
+
+        document.onclick = (e) => {
+            if (!e.target.closest('#dropdown')) {
+                el.dropdownToggle.classList.remove('open');
+                el.dropdownList.classList.remove('open');
+            }
+        };
+
+        document.querySelectorAll('.dropdown-option').forEach(opt => {
+            opt.onclick = () => {
+                document.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                state.category = opt.dataset.value;
+                state.emoji = opt.dataset.emoji;
+                el.selectedText.textContent = opt.querySelector('.option-name').textContent;
+                el.selectedEmoji.textContent = state.emoji;
+                el.dropdownToggle.classList.remove('open');
+                el.dropdownList.classList.remove('open');
+            };
+        });
+
+        // ========== LINES ==========
+        el.linesRange.oninput = (e) => el.linesNum.textContent = e.target.value;
+
+        // ========== GENERATE ==========
+        async function callAPI(prompt) {
+            try {
+                const url = `${CONFIG.apiUrl}?prompt=${encodeURIComponent(prompt)}&apikey=${CONFIG.apiKey}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                if (data.success && data.data && data.data.result && data.data.result.chat) {
+                    return data.data.result.chat;
+                }
+                throw new Error('No response');
+            } catch (err) {
+                console.error('API Error:', err);
+                throw err;
+            }
+        }
+
+        function getRandomPrompt(category, lang, lines) {
+            const prompts = PROMPTS[category];
+            const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+            
+            const langInstructions = {
+                urdu: 'Write in pure Urdu script (اردو میں لکھیں). Use beautiful Urdu poetic words.',
+                hindi: 'Write in Hindi Devanagari script (हिंदी में लिखिए). Use beautiful Hindi poetic words.',
+                roman: 'Write in Roman Urdu (Urdu words written in English letters like "Mohabbat ka safar hai ye").',
+                english: 'Write in beautiful poetic English.'
+            };
+
+            return `${randomPrompt}
+
+IMPORTANT INSTRUCTIONS:
+1. Write exactly ${lines} lines only
+2. ${langInstructions[lang]}
+3. Make it emotional, deep, and heart-touching
+4. Use beautiful metaphors and poetic expressions
+5. Each line should rhyme or flow beautifully
+6. DO NOT write any explanation, title, or extra text
+7. ONLY output the ${lines} poetry lines, nothing else
+
+Generate a unique and beautiful ${lines}-line poetry now:`;
+        }
+
+        el.generateBtn.onclick = async () => {
+            if (!state.category) {
+                showToast('Please select a category!', 'warning');
+                return;
+            }
+
+            if (state.isGenerating) return;
+            state.isGenerating = true;
+
+            // UI
+            el.btnSpinner.style.display = 'block';
+            el.btnIcon.style.display = 'none';
+            el.btnText.textContent = 'Creating...';
+            el.generateBtn.disabled = true;
+            el.loadingBox.style.display = 'block';
+            el.emptyBox.style.display = 'none';
+
+            try {
+                const prompt = getRandomPrompt(state.category, el.langSelect.value, el.linesRange.value);
+                const poetry = await callAPI(prompt);
+                
+                if (poetry && poetry.trim()) {
+                    createCard(poetry);
+                    showToast('Poetry created! 🌹');
+                } else {
+                    throw new Error('Empty response');
+                }
+            } catch (err) {
+                showToast('Failed. Please try again.', 'error');
+                if (state.count === 0) el.emptyBox.style.display = 'block';
+            } finally {
+                state.isGenerating = false;
+                el.btnSpinner.style.display = 'none';
+                el.btnIcon.style.display = 'inline';
+                el.btnText.textContent = 'Generate Poetry';
+                el.generateBtn.disabled = false;
+                el.loadingBox.style.display = 'none';
+            }
+        };
+
+        // ========== CREATE CARD ==========
+        function createCard(poetry) {
+            el.emptyBox.style.display = 'none';
+            state.count++;
+            el.poemCount.textContent = `${state.count} poem${state.count > 1 ? 's' : ''}`;
+
+            const catNames = {
+                love: 'Love', sad: 'Sad', friendship: 'Friendship', life: 'Life',
+                nature: 'Nature', motivation: 'Motivation', missing: 'Missing', attitude: 'Attitude'
+            };
+
+            // Clean poetry text
+            let cleanPoetry = poetry.trim();
+            
+            // Remove any numbered lists or bullets
+            cleanPoetry = cleanPoetry.replace(/^\d+\.\s*/gm, '');
+            cleanPoetry = cleanPoetry.replace(/^[-•]\s*/gm, '');
+            
+            const lines = cleanPoetry.split('\n').filter(l => l.trim().length > 0);
+            const html = lines.map(l => `<p>${l.trim()}</p>`).join('');
+
+            const card = document.createElement('div');
+            card.className = 'poetry-card';
+            card.innerHTML = `
+                <div class="card-top">
+                    <div class="card-cat">
+                        <span class="card-emoji">${state.emoji}</span>
+                        <span class="card-cat-name">${catNames[state.category]}</span>
+                    </div>
+                    <div class="card-btns">
+                        <button class="card-btn copy-btn" title="Copy"><i class="fas fa-copy"></i></button>
+                        <button class="card-btn share-btn" title="Share"><i class="fas fa-share-alt"></i></button>
+                        <button class="card-btn del-btn" title="Delete"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-text">${html}</div>
+                </div>
+                <div class="card-bottom">
+                    <span class="card-time"><i class="fas fa-clock"></i> Just now</span>
+                    <span class="card-lines-badge">${lines.length} lines</span>
+                </div>
+            `;
+
+            // Copy
+            card.querySelector('.copy-btn').onclick = async function() {
+                const text = lines.join('\n');
+                await navigator.clipboard.writeText(text);
+                this.classList.add('copied');
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                showToast('Copied! 📋');
+                setTimeout(() => {
+                    this.classList.remove('copied');
+                    this.innerHTML = '<i class="fas fa-copy"></i>';
+                }, 2000);
+            };
+
+            // Share
+            card.querySelector('.share-btn').onclick = async () => {
+                const text = lines.join('\n') + '\n\n— Roohi 🌹';
+                if (navigator.share) {
+                    await navigator.share({ text });
+                } else {
+                    await navigator.clipboard.writeText(text);
+                    showToast('Copied for sharing!');
+                }
+            };
+
+            // Delete
+            card.querySelector('.del-btn').onclick = () => {
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                card.style.transition = 'all 0.3s';
+                setTimeout(() => {
+                    card.remove();
+                    state.count--;
+                    el.poemCount.textContent = `${state.count} poem${state.count !== 1 ? 's' : ''}`;
+                    if (state.count === 0) el.emptyBox.style.display = 'block';
+                }, 300);
+            };
+
+            // Animate in
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(15px)';
+            el.poetryCards.prepend(card);
+            setTimeout(() => {
+                card.style.transition = 'all 0.3s';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 50);
+        }
+
+        console.log('🌹 Roohi Poetry Website Ready');
+    </script>
+</body>
+</html>
